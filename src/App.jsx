@@ -2,7 +2,7 @@ import styles from "./App.module.css";
 import { BookList } from "./BookList";
 import { AddBook } from "./AddBook";
 import { Show, createSignal } from "solid-js";
-import { MyContext } from "./MyContext";
+import { useI18n } from "./I18nProvider";
 
 const initialBooks = [
   { title: "Code Complete", author: "Steve McConnell" },
@@ -31,14 +31,24 @@ function Bookshelf(props) {
     </div>
   );
 }
-
 function App() {
-  const [value, setValue] = createSignal("app value");
+  const [t, changeLanguage] = useI18n();
 
   return (
-    <MyContext.Provider value={[value, setValue]}>
-      <Bookshelf name="Momo" />
-    </MyContext.Provider>
+    <>
+      <div>
+        <a
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            changeLanguage("ar");
+          }}
+        >
+          Arabic
+        </a>
+      </div>
+      <Bookshelf name={t("hello")} />
+    </>
   );
 }
 
