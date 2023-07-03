@@ -2,6 +2,7 @@ import styles from "./App.module.css";
 import { BookList } from "./BookList";
 import { AddBook } from "./AddBook";
 import { Show, createSignal } from "solid-js";
+import { MyContext } from "./MyContext";
 
 const initialBooks = [
   { title: "Code Complete", author: "Steve McConnell" },
@@ -32,7 +33,13 @@ function Bookshelf(props) {
 }
 
 function App() {
-  return <Bookshelf name="Momo" />;
+  const [value, setValue] = createSignal("app value");
+
+  return (
+    <MyContext.Provider value={[value, setValue]}>
+      <Bookshelf name="Momo" />
+    </MyContext.Provider>
+  );
 }
 
 export default App;

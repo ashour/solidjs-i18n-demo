@@ -1,11 +1,14 @@
 import { Show, createResource, createSignal } from "solid-js";
 import { searchBooks } from "./searchBooks";
+import { useMyContext } from "./MyContext";
 
 export function AddBook(props) {
   const [input, setInput] = createSignal("");
   const [query, setQuery] = createSignal("");
 
   const [data] = createResource(query, searchBooks);
+
+  const [, setValue] = useMyContext();
 
   return (
     <>
@@ -31,6 +34,15 @@ export function AddBook(props) {
           Search
         </button>
       </form>
+
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          setValue("add book value");
+        }}
+      >
+        Set value
+      </button>
 
       <Show when={!data.loading} fallback={<>Searching...</>}>
         <ul>
